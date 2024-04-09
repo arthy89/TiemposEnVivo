@@ -2,10 +2,16 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@apollo/client";
 import { Formik } from "formik";
+import { useNavigation } from "@react-navigation/native";
+import React, { createContext, useState, useContext } from "react";
 
 import { LOGIN } from "../../graphql/login";
 
 const LoginForm = () => {
+  const navigation = useNavigation();
+  const [user, setUser] = useState(null);
+  const UserContext = createContext();
+
   const [initLogin, { loading, error }] = useMutation(LOGIN);
 
   const handleSubmit = async (values) => {
@@ -17,15 +23,15 @@ const LoginForm = () => {
           password: values.password,
         },
       });
-      //   console.log("Respuesta del Login: ", data);
+      // console.log("Respuesta del Login: ", data);
       const { usuario, token } = data.login;
-      //   console.log("Usuario:", usuario);
-      console.log("Token:", token);
-      await AsyncStorage.setItem("token", token);
-      console.log("Token guardado correctamente en AsyncStorage");
+      // console.log("Usuario:", usuario);
+      // console.log("Token:", token);
+      await AsyncStorage.setItem("userAuth", JSON.stringify(usuario));
+      // await AsyncStorage.setItem("token", token);
+      // console.log(await AsyncStorage.getItem("userAuth"));
 
-      const storedToken = await AsyncStorage.getItem("token");
-      console.warn("Token en AsyncStorage es:", storedToken);
+      navigation.navigate("Profile");
     } catch (error) {
       console.error("Error durante el login: ", error);
     }
@@ -45,7 +51,7 @@ const LoginForm = () => {
           <View>
             <Text className="mx-5 font-bold text-xl">Correo</Text>
             <TextInput
-              className="flex self-center bg-zinc-200 px-4 py-3 rounded-md w-11/12 mb-3"
+              className="flex self-center bg-zinc-300 px-4 py-3 rounded-md w-11/12 mb-3"
               placeholder="ejemplo@gmail.com"
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
@@ -54,7 +60,7 @@ const LoginForm = () => {
 
             <Text className="mx-5 font-bold text-xl">Contraseña</Text>
             <TextInput
-              className="flex self-center bg-zinc-200 px-4 py-3 rounded-md w-11/12 mb-3 "
+              className="flex self-center bg-zinc-300 px-4 py-3 rounded-md w-11/12 mb-3 "
               placeholder="Ingrese su contraseña"
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}

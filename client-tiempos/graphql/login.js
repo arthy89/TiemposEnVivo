@@ -14,6 +14,7 @@ export const LOGIN = gql`
           nombre
           region
         }
+        expiresAccessAt
       }
     }
   }

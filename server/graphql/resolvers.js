@@ -3,10 +3,7 @@ import Org from "../models/Org.js";
 import Usuario from "../models/Usuario.js";
 import bcrypt from "bcrypt";
 import { createAccessToken } from "../libs/jwt.js";
-import {
-  verificarToken,
-  authMiddleware,
-} from "../middlewares/verificarToken.js";
+import { verificarToken } from "../middlewares/verificarToken.js";
 
 export const resolvers = {
   Query: {
@@ -15,9 +12,9 @@ export const resolvers = {
     orgs: async () => await Org.find(),
     // Usuarios
     usuarios: async () => await Usuario.find(),
-    usuario: async (_, { email }) => {
-      const usuario = await Usuario.findOne({ email });
-      // console.log(token);
+    usuario: async (_, { token }) => {
+      const tokenDecoded = verificarToken(token);
+      const usuario = await Usuario.findById(tokenDecoded.id);
       return usuario;
     },
   },
@@ -42,7 +39,7 @@ export const resolvers = {
       return savedOrg;
     },
 
-    // USUARIOS
+    //? USUARIOS
     createUsuario: async (
       _,
       { nombre, email, password, rolId, orgId },
@@ -73,14 +70,16 @@ export const resolvers = {
       if (!passMatch) throw new Error("Contraseña incorrecta");
 
       const token = await createAccessToken({ id: usuario._id });
+
+      //! Tiempo de expiracion de la sesion
+      const expiresAccessAt = new Date();
+      expiresAccessAt.setHours(expiresAccessAt.getHours() + 24);
+      usuario.expiresAccessAt = expiresAccessAt;
       usuario.save(); // guardar el nuevo token
 
       return { usuario, token };
     },
-
-    logout: async (_, __, { req }) => {
-      return "log out exitoso";
-    },
+    //? USUARIOS
   },
 
   // ! RELACIONES

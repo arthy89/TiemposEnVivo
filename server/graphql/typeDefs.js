@@ -7,7 +7,7 @@ export const typeDefs = gql`
     orgs: [Org]
     # Usuarios
     usuarios: [Usuario]
-    usuario: Usuario
+    usuario(token: String!): Usuario
   }
 
   # Consultas
@@ -28,8 +28,6 @@ export const typeDefs = gql`
     ): Usuario
 
     login(email: String!, password: String!): AuthKey
-
-    logout: String
   }
 
   # Definicion de las Variables
@@ -56,6 +54,7 @@ export const typeDefs = gql`
     # token: String
     rol: Rol # retornar datos del rol al que pertenece
     org: Org # retornar datos de la organizacion al que pertenece
+    expiresAccessAt: String
     createdAt: String
     updatedAt: String
   }

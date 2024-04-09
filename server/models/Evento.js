@@ -1,24 +1,17 @@
 import mongoose from "mongoose";
 
-const usuarioSchema = new mongoose.Schema(
+const eventoSchema = new mongoose.Schema(
   {
     nombre: {
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-      trim: true, // para quitar espacios innecesarios
-      unique: true,
-    },
-    password: {
+    tipo: {
       type: String,
       required: true,
     },
-    rolId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Rol",
+    descripcion: {
+      type: String,
       required: true,
     },
     orgId: {
@@ -26,8 +19,20 @@ const usuarioSchema = new mongoose.Schema(
       ref: "Org",
       required: true,
     },
-    expiresAccessAt: {
+    lugar: {
+      type: String,
+      required: true,
+    },
+    fechaHora: {
       type: Date,
+      required: true,
+    },
+    estado: {
+      type: Boolean,
+    },
+    // foto
+    resultado: {
+      type: String,
     },
   },
   {
@@ -35,4 +40,4 @@ const usuarioSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Usuario", usuarioSchema);
+export default mongoose.model("Evento", eventoSchema);

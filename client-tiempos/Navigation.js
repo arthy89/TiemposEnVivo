@@ -4,14 +4,56 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 
-// screens
+//! screens/pantallas
 import HomeScreen from "./screens/HomeScreen";
-import UserScreen from "./screens/UserScreen";
+// Usuario
+import UserScreen from "./screens/users/UserScreen";
+import Profile from "./screens/users/Profile";
+import AdminGeneralScreen from "./screens/admin/AdminGeneralScreen";
 
+//? STACKS
+// Usauraio
+const UserStackNavigator = createNativeStackNavigator();
+function UserStack() {
+  return (
+    <UserStackNavigator.Navigator initialRouteName="Login">
+      {/* Login */}
+      <UserStackNavigator.Screen
+        name="Login"
+        component={UserScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Perfil */}
+      <UserStackNavigator.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Administracion */}
+      <UserStackNavigator.Screen
+        name="AdminGeneral"
+        component={AdminGeneralScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </UserStackNavigator.Navigator>
+  );
+}
+//? STACKS
+
+//! BOTONES INFERIORES
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator>
+      {/* Home */}
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -25,9 +67,11 @@ function MyTabs() {
           headerShown: false,
         }}
       />
+
+      {/* Usuario */}
       <Tab.Screen
         name="User"
-        component={UserScreen}
+        component={UserStack}
         options={{
           tabBarLabel: "User",
           tabBarShowLabel: false,
