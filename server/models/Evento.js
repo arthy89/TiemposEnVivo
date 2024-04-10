@@ -29,6 +29,7 @@ const eventoSchema = new mongoose.Schema(
     },
     estado: {
       type: Boolean,
+      default: false,
     },
     // foto
     resultado: {

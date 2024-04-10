@@ -1,22 +1,29 @@
 import Rol from "../models/Rol.js";
 import Org from "../models/Org.js";
 import Usuario from "../models/Usuario.js";
+import Evento from "../models/Evento.js";
+import Categoria from "../models/Categoria.js";
+
 import bcrypt from "bcrypt";
 import { createAccessToken } from "../libs/jwt.js";
 import { verificarToken } from "../middlewares/verificarToken.js";
 
 export const resolvers = {
   Query: {
-    // hello: (_, __, context) => `Hello ${context.name}!`,
     roles: async () => await Rol.find(),
     orgs: async () => await Org.find(),
-    // Usuarios
+
+    //? Usuarios
     usuarios: async () => await Usuario.find(),
     usuario: async (_, { token }) => {
       const tokenDecoded = verificarToken(token);
       const usuario = await Usuario.findById(tokenDecoded.id);
       return usuario;
     },
+
+    // * Eventos
+    evento: async (_, { _id }) => await Evento.findById(_id),
+    eventos: async () => await Evento.find(),
   },
 
   Mutation: {
@@ -80,11 +87,74 @@ export const resolvers = {
       return { usuario, token };
     },
     //? USUARIOS
+
+    //* EVENTOS
+    crearEvento: async (
+      _,
+      { nombre, tipo, descripcion, orgId, lugar, fechaHora }
+    ) => {
+      const evento = new Evento({
+        nombre,
+        tipo,
+        descripcion,
+        orgId,
+        lugar,
+        fechaHora,
+      });
+      const savedEvento = await evento.save();
+      return savedEvento;
+    },
+
+    delEvento: async (_, { _id }) => {
+      const deletedEvento = await Evento.findByIdAndDelete(_id);
+      if (!deletedEvento) throw new Error("Evento no encontrado");
+      await Categoria.deleteMany({ eventoId: deletedEvento._id });
+      return deletedEvento;
+    },
+
+    uptEvento: async (_, args) => {
+      const updatedEvento = await Evento.findByIdAndUpdate(args._id, args, {
+        new: true,
+      });
+      if (!updatedEvento) throw new Error("Evento no encontrado");
+      return updatedEvento;
+    },
+
+    finEvento: async (_, { _id }) => {
+      const eventoFinalizado = await Evento.findByIdAndUpdate(
+        _id,
+        { estado: true },
+        { new: true }
+      );
+      if (!eventoFinalizado) throw new Error("Evento no encontrado");
+      return eventoFinalizado;
+    },
+
+    crearCats: async (_, { nombre, eventoId }) => {
+      const cat = new Categoria({
+        nombre,
+        eventoId,
+      });
+      const savedCat = await cat.save();
+      return savedCat;
+    },
+
+    //* EVENTOS
   },
 
   // ! RELACIONES
   Usuario: {
     rol: async (parent) => await Rol.findById(parent.rolId),
     org: async (parent) => await Org.findById(parent.orgId),
+  },
+
+  Evento: {
+    org: async (parent) => await Org.findById(parent.orgId),
+    categorias: async (parent) =>
+      await Categoria.find({ eventoId: parent._id }),
+  },
+
+  Categoria: {
+    evento: async (parent) => await Evento.findById(parent.eventoId),
   },
 };
