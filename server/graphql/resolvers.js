@@ -3,6 +3,8 @@ import Org from "../models/Org.js";
 import Usuario from "../models/Usuario.js";
 import Evento from "../models/Evento.js";
 import Categoria from "../models/Categoria.js";
+import Etapa from "../models/Etapa.js";
+import Especial from "../models/Especial.js";
 
 import bcrypt from "bcrypt";
 import { createAccessToken } from "../libs/jwt.js";
@@ -109,6 +111,15 @@ export const resolvers = {
       const deletedEvento = await Evento.findByIdAndDelete(_id);
       if (!deletedEvento) throw new Error("Evento no encontrado");
       await Categoria.deleteMany({ eventoId: deletedEvento._id });
+
+      // Eliminar los Especiales asociados a cada Etapa eliminada
+      const delEtapa = await Etapa.find({ eventoId: deletedEvento._id });
+      for (const especial of delEtapa) {
+        await Especial.findOneAndDelete({ etapaId: especial._id });
+      }
+
+      await Etapa.deleteMany({ eventoId: deletedEvento._id });
+
       return deletedEvento;
     },
 
@@ -120,23 +131,78 @@ export const resolvers = {
       return updatedEvento;
     },
 
-    finEvento: async (_, { _id }) => {
-      const eventoFinalizado = await Evento.findByIdAndUpdate(
+    actEvento: async (_, { _id, estado }) => {
+      const eventoActualizado = await Evento.findByIdAndUpdate(
         _id,
-        { estado: true },
+        { estado },
         { new: true }
       );
-      if (!eventoFinalizado) throw new Error("Evento no encontrado");
-      return eventoFinalizado;
+      if (!eventoActualizado) throw new Error("Evento no encontrado");
+      return eventoActualizado;
     },
 
-    crearCats: async (_, { nombre, eventoId }) => {
+    crearCat: async (_, { nombre, eventoId }) => {
       const cat = new Categoria({
         nombre,
         eventoId,
       });
       const savedCat = await cat.save();
       return savedCat;
+    },
+
+    delCat: async (_, { _id }) => {
+      const delCat = await Categoria.findByIdAndDelete(_id);
+      if (!delCat) throw new Error("Categoria no encontrada");
+      return delCat;
+    },
+
+    crearEtapa: async (_, { nombre, eventoId }) => {
+      const etapa = new Etapa({
+        nombre,
+        eventoId,
+      });
+      const savedEtapa = await etapa.save();
+      return savedEtapa;
+    },
+
+    uptEtapa: async (_, args) => {
+      const updatedEtapa = await Etapa.findByIdAndUpdate(args._id, args, {
+        new: true,
+      });
+      if (!updatedEtapa) throw new Error("Etapa no encontrada");
+      return updatedEtapa;
+    },
+
+    delEtapa: async (_, { _id }) => {
+      const delEtapa = await Etapa.findByIdAndDelete(_id);
+      if (!delEtapa) throw new Error("Etapa no encontrada");
+      await Especial.deleteMany({ etapaId: delEtapa._id });
+      return delEtapa;
+    },
+
+    crearEspecial: async (_, { nombre, lugar, distancia, etapaId }) => {
+      const especial = new Especial({
+        nombre,
+        lugar,
+        distancia,
+        etapaId,
+      });
+      const savedEspecial = await especial.save();
+      return savedEspecial;
+    },
+
+    uptEspecial: async (_, args) => {
+      const updatedEspecial = await Especial.findByIdAndUpdate(args._id, args, {
+        new: true,
+      });
+      if (!updatedEspecial) throw new Error("Especial no encontrado");
+      return updatedEspecial;
+    },
+
+    delEspecial: async (_, { _id }) => {
+      const delEspecial = await Especial.findByIdAndDelete(_id);
+      if (!delEspecial) throw new Error("Especial no encontrado");
+      return delEspecial;
     },
 
     //* EVENTOS
@@ -152,9 +218,19 @@ export const resolvers = {
     org: async (parent) => await Org.findById(parent.orgId),
     categorias: async (parent) =>
       await Categoria.find({ eventoId: parent._id }),
+    etapas: async (parent) => await Etapa.find({ eventoId: parent._id }),
   },
 
   Categoria: {
     evento: async (parent) => await Evento.findById(parent.eventoId),
+  },
+
+  Etapa: {
+    evento: async (parent) => await Evento.findById(parent.eventoId),
+    especiales: async (parent) => await Especial.find({ etapaId: parent._id }),
+  },
+
+  Especial: {
+    etapa: async (parent) => await Etapa.findById(parent.etapaId),
   },
 };

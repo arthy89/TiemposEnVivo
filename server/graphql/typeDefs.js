@@ -51,10 +51,31 @@ export const typeDefs = gql`
       lugar: String
       fechaHora: String
     ): Evento
-    finEvento(_id: ID!): Evento
+    actEvento(_id: ID!, estado: String!): Evento
 
     # CATS del EVENTO
-    crearCats(nombre: String!, eventoId: ID!): Categoria
+    crearCat(nombre: String!, eventoId: ID!): Categoria
+    delCat(_id: ID!): Categoria
+
+    # ETAPAS del EVENTO
+    crearEtapa(nombre: String!, eventoId: ID!): Etapa
+    uptEtapa(_id: ID!, nombre: String!): Etapa
+    delEtapa(_id: ID!): Etapa
+
+    #ESPECIALES por ETAPAS del EVENTO
+    crearEspecial(
+      nombre: String!
+      lugar: String!
+      distancia: String!
+      etapaId: ID!
+    ): Especial
+    uptEspecial(
+      _id: ID!
+      nombre: String
+      lugar: String
+      distancia: String
+    ): Especial
+    delEspecial(_id: ID!): Especial
 
     # Competidor
     crearCompetidor(
@@ -108,10 +129,11 @@ export const typeDefs = gql`
     org: Org
     lugar: String
     fechaHora: String
-    estado: Boolean
+    estado: String
     createdAt: String
     updatedAt: String
     categorias: [Categoria] # para listar las categorias en el Evento
+    etapas: [Etapa]
   }
 
   type Categoria {
@@ -122,10 +144,24 @@ export const typeDefs = gql`
     updatedAt: String
   }
 
-  # type Etapa {
-  #   _id: ID
-  #   nombre: String
-  # }
+  type Etapa {
+    _id: ID
+    nombre: String
+    evento: Evento
+    createdAt: String
+    updatedAt: String
+    especiales: [Especial]
+  }
+
+  type Especial {
+    _id: ID
+    nombre: String
+    lugar: String
+    distancia: String
+    etapa: Etapa
+    createdAt: String
+    updatedAt: String
+  }
 
   type Competidor {
     _id: ID
