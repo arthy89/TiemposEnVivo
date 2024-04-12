@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-const listTriSchema = new mongoose.Schema(
+const tripulacionSchema = new mongoose.Schema(
   {
     piloto: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Competidor",
       required: true,
     },
-    copiloto: {
+    navegante: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Competidor",
       required: true,
@@ -35,13 +35,12 @@ const listTriSchema = new mongoose.Schema(
     },
     equipoNombre: {
       type: String,
-      required: true,
     },
   },
   {
     timestamps: true,
-    collection: "listadetripulaciones", // especificar el nombre de la coleccion
+    collection: "tripulaciones", // especificar el nombre de la coleccion
   }
 );
 
-export default mongoose.model("ListaDeTripulaciones", listTriSchema);
+export default mongoose.model("Tripulacion", tripulacionSchema);

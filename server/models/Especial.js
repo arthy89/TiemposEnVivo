@@ -22,6 +22,7 @@ const espSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    // collection: "especiales",
   }
 );
 

@@ -5,6 +5,8 @@ import Evento from "../models/Evento.js";
 import Categoria from "../models/Categoria.js";
 import Etapa from "../models/Etapa.js";
 import Especial from "../models/Especial.js";
+import Competidor from "../models/Competidor.js";
+import Tripulacion from "../models/Tripulacion.js";
 
 import bcrypt from "bcrypt";
 import { createAccessToken } from "../libs/jwt.js";
@@ -26,6 +28,10 @@ export const resolvers = {
     // * Eventos
     evento: async (_, { _id }) => await Evento.findById(_id),
     eventos: async () => await Evento.find(),
+
+    // Competidores
+    competidores: async () => await Competidor.find(),
+    competidor: async (_, { _id }) => await Competidor.findById(_id),
   },
 
   Mutation: {
@@ -204,8 +210,66 @@ export const resolvers = {
       if (!delEspecial) throw new Error("Especial no encontrado");
       return delEspecial;
     },
-
     //* EVENTOS
+
+    // COMPETIDORES
+    crearCompetidor: async (
+      _,
+      { nombre, apellidos, fechaDeNac, tipoDeSangre }
+    ) => {
+      const competidor = await new Competidor({
+        nombre,
+        apellidos,
+        fechaDeNac,
+        tipoDeSangre,
+      });
+      const savedComp = await competidor.save();
+      return savedComp;
+    },
+
+    uptCompetidor: async (_, args) => {
+      const updatedComp = await Competidor.findByIdAndUpdate(args._id, args, {
+        new: true,
+      });
+      if (!updatedComp) throw new Error("Competidor no encontrado");
+      return updatedComp;
+    },
+
+    delCompetidor: async (_, { _id }) => {
+      const delComp = await Competidor.findByIdAndDelete(_id);
+      if (!delComp) throw new Error("Competidor no encontrado");
+      return delComp;
+    },
+    // COMPETIDORES
+
+    //TODO TRIPULACIONES
+    crearTripulacion: async (
+      _,
+      {
+        piloto,
+        navegante,
+        eventoId,
+        categoria,
+        autoMarca,
+        autoModelo,
+        autoNum,
+        equipoNombre,
+      }
+    ) => {
+      const tripulacion = new Tripulacion({
+        piloto,
+        navegante,
+        eventoId,
+        categoria,
+        autoMarca,
+        autoModelo,
+        autoNum,
+        equipoNombre,
+      });
+      const savedTri = await tripulacion.save();
+      return savedTri;
+    },
+    //TODO TRIPULACIONES
   },
 
   // ! RELACIONES

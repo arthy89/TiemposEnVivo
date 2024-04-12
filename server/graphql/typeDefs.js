@@ -13,9 +13,16 @@ export const typeDefs = gql`
     # Eventos
     eventos: [Evento]
     evento(_id: ID!): Evento
+
+    # Competidores
+    competidores: [Competidor]
+    competidor(_id: ID!): Competidor
   }
 
-  # Consultas de mutacion
+  ################################
+  # Definicion de las Mutaciones #
+  ################################
+
   type Mutation {
     # Roles
     createRol(rol_name: String!): Rol
@@ -77,17 +84,49 @@ export const typeDefs = gql`
     ): Especial
     delEspecial(_id: ID!): Especial
 
-    # Competidor
+    # COMPETIDOR
     crearCompetidor(
       nombre: String!
       apellidos: String!
       fechaDeNac: String
       tipoDeSangre: String
     ): Competidor
+    uptCompetidor(
+      _id: ID!
+      nombre: String
+      apellidos: String
+      fechaDeNac: String
+      tipoDeSangre: String
+    ): Competidor
+    delCompetidor(_id: ID!): Competidor
+
+    # TRIPULACION
+    crearTripulacion(
+      piloto: ID!
+      navegante: ID!
+      eventoId: ID!
+      categoria: String!
+      autoMarca: String!
+      autoModelo: String!
+      autoNum: String!
+      equipoNombre: String
+    ): Tripulacion
+    uptTripulacion(
+      piloto: ID
+      navegante: ID
+      categoria: String
+      autoMarca: String
+      autoModelo: String
+      autoNum: String
+      equipoNombre: String
+    ): Tripulacion
+    delTripulacion(_id: ID!): Tripulacion
   }
 
-  # ###############################################
-  # Definicion de las Variables
+  ###############################
+  # Definicion de las Variables #
+  ###############################
+
   type Rol {
     _id: ID
     rol_name: String
@@ -169,6 +208,20 @@ export const typeDefs = gql`
     apellidos: String
     fechaDeNac: String
     tipoDeSangre: String
+    createdAt: String
+    updatedAt: String
+  }
+
+  type Tripulacion {
+    _id: ID
+    piloto: Competidor
+    navegante: Competidor
+    evento: Evento
+    categoria: String
+    autoMarca: String
+    autoModelo: String
+    autoNum: String
+    equipoNombre: String
     createdAt: String
     updatedAt: String
   }
