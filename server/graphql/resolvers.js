@@ -32,6 +32,10 @@ export const resolvers = {
     // Competidores
     competidores: async () => await Competidor.find(),
     competidor: async (_, { _id }) => await Competidor.findById(_id),
+
+    // TODO Tripulaciones
+    tripulaciones: async () => await Tripulacion.find(),
+    tripulacion: async (_, { _id }) => await Tripulacion.findById(_id),
   },
 
   Mutation: {
@@ -269,6 +273,20 @@ export const resolvers = {
       const savedTri = await tripulacion.save();
       return savedTri;
     },
+
+    uptTripulacion: async (_, args) => {
+      const updatedTrip = await Tripulacion.findByIdAndUpdate(args._id, args, {
+        new: true,
+      });
+      if (!updatedTrip) throw new Error("Tripulación no encontrada");
+      return updatedTrip;
+    },
+
+    delTripulacion: async (_, { _id }) => {
+      const delTrip = await Tripulacion.findByIdAndDelete(_id);
+      if (!delTrip) throw new Error("Tripulación no encontrada");
+      return delTrip;
+    },
     //TODO TRIPULACIONES
   },
 
@@ -283,6 +301,8 @@ export const resolvers = {
     categorias: async (parent) =>
       await Categoria.find({ eventoId: parent._id }),
     etapas: async (parent) => await Etapa.find({ eventoId: parent._id }),
+    tripulaciones: async (parent) =>
+      await Tripulacion.find({ eventoId: parent._id }),
   },
 
   Categoria: {
@@ -296,5 +316,11 @@ export const resolvers = {
 
   Especial: {
     etapa: async (parent) => await Etapa.findById(parent.etapaId),
+  },
+
+  Tripulacion: {
+    piloto: async (parent) => await Competidor.findById(parent.piloto),
+    navegante: async (parent) => await Competidor.findById(parent.navegante),
+    evento: async (parent) => await Evento.findById(parent.eventoId),
   },
 };

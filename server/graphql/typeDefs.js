@@ -17,6 +17,10 @@ export const typeDefs = gql`
     # Competidores
     competidores: [Competidor]
     competidor(_id: ID!): Competidor
+
+    # Tripulaciones
+    tripulaciones: [Tripulacion]
+    tripulacion(_id: ID!): Tripulacion
   }
 
   ################################
@@ -112,6 +116,7 @@ export const typeDefs = gql`
       equipoNombre: String
     ): Tripulacion
     uptTripulacion(
+      _id: ID!
       piloto: ID
       navegante: ID
       categoria: String
@@ -173,6 +178,7 @@ export const typeDefs = gql`
     updatedAt: String
     categorias: [Categoria] # para listar las categorias en el Evento
     etapas: [Etapa]
+    tripulaciones: [Tripulacion]
   }
 
   type Categoria {
