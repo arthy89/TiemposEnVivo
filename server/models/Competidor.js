@@ -13,15 +13,16 @@ const compSchema = new mongoose.Schema(
     // foto
     fechaDeNac: {
       type: Date,
-      required: true,
+      // required: true,
     },
     tipoDeSangre: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   {
     timestamps: true,
+    collection: "competidores",
   }
 );
 
