@@ -2,17 +2,32 @@ import mongoose from "mongoose";
 
 const tiempoSchema = new mongoose.Schema(
   {
-    tripulacion: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ListaDeTripulaciones",
-      required: true,
-    },
     especialId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Especial",
       required: true,
     },
-    creador: {
+    tripulacion: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tripulacion",
+      required: true,
+    },
+    horaSalida: {
+      type: Number,
+      required: true,
+    },
+    horaLlegada: {
+      type: Number,
+      required: true,
+    },
+    tiempoMarcado: {
+      type: Number,
+      // REGISTRO DE TIEMPO SOLAMENTE
+    },
+    penalizacion: {
+      type: Number,
+    },
+    registrador: {
       type: String,
       required: true,
     },

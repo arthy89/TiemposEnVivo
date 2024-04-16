@@ -21,6 +21,9 @@ export const typeDefs = gql`
     # Tripulaciones
     tripulaciones: [Tripulacion]
     tripulacion(_id: ID!): Tripulacion
+
+    # TIEMPOS #
+    tiempos: [Tiempo]
   }
 
   ################################
@@ -126,6 +129,18 @@ export const typeDefs = gql`
       equipoNombre: String
     ): Tripulacion
     delTripulacion(_id: ID!): Tripulacion
+
+    # TIEMPOS #
+    crearTiempo(
+      especialId: ID!
+      tripulacion: ID!
+      horaSalida: Int!
+      horaLlegada: Int!
+      tiempoMarcado: Int
+      penalizacion: Int
+      registrador: String!
+    ): Tiempo
+    delTiempo(_id: ID!): Tiempo
   }
 
   ###############################
@@ -230,5 +245,16 @@ export const typeDefs = gql`
     equipoNombre: String
     createdAt: String
     updatedAt: String
+  }
+
+  type Tiempo {
+    _id: ID
+    especial: Especial
+    tripulacion: Tripulacion
+    horaSalida: Int
+    horaLlegada: Int
+    tiempoMarcado: Int
+    penalizacion: Int
+    registrador: String
   }
 `;

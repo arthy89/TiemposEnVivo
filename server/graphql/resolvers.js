@@ -7,6 +7,7 @@ import Etapa from "../models/Etapa.js";
 import Especial from "../models/Especial.js";
 import Competidor from "../models/Competidor.js";
 import Tripulacion from "../models/Tripulacion.js";
+import Tiempo from "../models/Tiempo.js";
 
 import bcrypt from "bcrypt";
 import { createAccessToken } from "../libs/jwt.js";
@@ -36,6 +37,9 @@ export const resolvers = {
     // TODO Tripulaciones
     tripulaciones: async () => await Tripulacion.find(),
     tripulacion: async (_, { _id }) => await Tripulacion.findById(_id),
+
+    // ! TIEMPOS
+    tiempos: async () => await Tiempo.find(),
   },
 
   Mutation: {
@@ -288,6 +292,39 @@ export const resolvers = {
       return delTrip;
     },
     //TODO TRIPULACIONES
+
+    // ! TIEMPOS
+    crearTiempo: async (
+      _,
+      {
+        especialId,
+        tripulacion,
+        horaSalida,
+        horaLlegada,
+        tiempoMarcado,
+        penalizacion,
+        registrador,
+      }
+    ) => {
+      const tiempo = new Tiempo({
+        especialId,
+        tripulacion,
+        horaSalida,
+        horaLlegada,
+        tiempoMarcado,
+        penalizacion,
+        registrador,
+      });
+      const savedTiempo = await tiempo.save();
+      return savedTiempo;
+    },
+
+    delTiempo: async (_, { _id }) => {
+      const delTiempo = await Tiempo.findByIdAndDelete(_id);
+      if (!delTiempo) throw new Error("Tiempo no encontrado");
+      return delTiempo;
+    },
+    // ! TIEMPOS
   },
 
   // ! RELACIONES
@@ -322,5 +359,10 @@ export const resolvers = {
     piloto: async (parent) => await Competidor.findById(parent.piloto),
     navegante: async (parent) => await Competidor.findById(parent.navegante),
     evento: async (parent) => await Evento.findById(parent.eventoId),
+  },
+
+  Tiempo: {
+    especial: async (parent) => Especial.findById(parent.especialId),
+    tripulacion: async (parent) => Tripulacion.findById(parent.tripulacion),
   },
 };
