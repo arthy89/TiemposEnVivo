@@ -19,6 +19,7 @@ import EtapasScreen from "./screens/admin/etapa/EtapasScreen";
 import EtapaScreen from "./screens/admin/etapa/EtapaScreen";
 import EtapaFormScreen from "./screens/admin/etapa/EtapaFormScreen";
 import EspecialFormScreen from "./screens/admin/especial/EspecialFormScreen";
+import CatScreen from "./screens/admin/categorias/CatScreen";
 
 //? STACKS
 // Usauraio
@@ -98,10 +99,18 @@ function UserStack() {
       />
 
       {/* Especial */}
-
       <UserStackNavigator.Screen
         name="EspecialFormScreen"
         component={EspecialFormScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Categorias */}
+      <UserStackNavigator.Screen
+        name="CatScreen"
+        component={CatScreen}
         options={{
           headerShown: false,
         }}

@@ -43,9 +43,9 @@ const EventoScreen = () => {
       >
         <View>
           <Text className="font-bold text-lg">
-            Etapas {data.evento.etapas.length}
+            Etapas: {data.evento.etapas.length}
           </Text>
-          <Text className="text-md">Especiales {especialesTotal}</Text>
+          <Text className="text-md">Especiales: {especialesTotal}</Text>
         </View>
 
         <TouchableOpacity className="flex justify-center">
@@ -54,10 +54,16 @@ const EventoScreen = () => {
       </TouchableOpacity>
 
       {/* CATEGORIAS */}
-      <TouchableOpacity className="bg-zinc-200 rounded-md p-3 mx-3 shadow-sm shadow-zinc-300 mt-3 flex flex-row justify-between">
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("CatScreen", { eventoId: data.evento._id });
+          // console.log(data.evento);
+        }}
+        className="bg-zinc-200 rounded-md p-3 mx-3 shadow-sm shadow-zinc-300 mt-3 flex flex-row justify-between"
+      >
         <View>
           <Text className="font-bold text-lg">
-            Categorías {data.evento.categorias.length}
+            Categorías: {data.evento.categorias.length}
           </Text>
         </View>
 
@@ -70,7 +76,7 @@ const EventoScreen = () => {
       <TouchableOpacity className="bg-zinc-200 rounded-md p-3 mx-3 shadow-sm shadow-zinc-300 mt-3 flex flex-row justify-between">
         <View>
           <Text className="font-bold text-lg">
-            Tripulaciones {data.evento.tripulaciones.length}
+            Tripulaciones: {data.evento.tripulaciones.length}
           </Text>
         </View>
 
