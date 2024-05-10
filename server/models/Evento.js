@@ -23,7 +23,11 @@ const eventoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    fechaHora: {
+    fecha: {
+      type: Date,
+      required: true,
+    },
+    hora: {
       type: Date,
       required: true,
     },

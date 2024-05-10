@@ -14,6 +14,12 @@ export const typeDefs = gql`
     eventos: [Evento]
     evento(_id: ID!): Evento
 
+    # Etapa
+    etapa(_id: ID!): Etapa
+
+    # Especial
+    especial(_id: ID!): Especial
+
     # Competidores
     competidores: [Competidor]
     competidor(_id: ID!): Competidor
@@ -54,7 +60,8 @@ export const typeDefs = gql`
       descripcion: String!
       orgId: ID!
       lugar: String!
-      fechaHora: String! # estado: Boolean
+      fecha: String! # estado: Boolean
+      hora: String!
     ): Evento
     delEvento(_id: ID!): Evento
     uptEvento(
@@ -63,7 +70,8 @@ export const typeDefs = gql`
       tipo: String
       descripcion: String
       lugar: String
-      fechaHora: String
+      fecha: String
+      hora: String
     ): Evento
     actEvento(_id: ID!, estado: String!): Evento
 
@@ -187,7 +195,8 @@ export const typeDefs = gql`
     descripcion: String
     org: Org
     lugar: String
-    fechaHora: String
+    fecha: String
+    hora: String
     estado: String
     createdAt: String
     updatedAt: String

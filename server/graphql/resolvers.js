@@ -30,6 +30,12 @@ export const resolvers = {
     evento: async (_, { _id }) => await Evento.findById(_id),
     eventos: async () => await Evento.find(),
 
+    // Etapas
+    etapa: async (_, { _id }) => await Etapa.findById(_id),
+
+    // Especiales
+    especial: async (_, { _id }) => await Especial.findById(_id),
+
     // Competidores
     competidores: async () => await Competidor.find(),
     competidor: async (_, { _id }) => await Competidor.findById(_id),
@@ -107,7 +113,7 @@ export const resolvers = {
     //* EVENTOS
     crearEvento: async (
       _,
-      { nombre, tipo, descripcion, orgId, lugar, fechaHora }
+      { nombre, tipo, descripcion, orgId, lugar, fecha, hora }
     ) => {
       const evento = new Evento({
         nombre,
@@ -115,7 +121,8 @@ export const resolvers = {
         descripcion,
         orgId,
         lugar,
-        fechaHora,
+        fecha,
+        hora,
       });
       const savedEvento = await evento.save();
       return savedEvento;
