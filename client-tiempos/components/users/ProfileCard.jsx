@@ -9,7 +9,7 @@ const ProfileCard = ({ userData }) => {
       {/* Nombre */}
       <View className="mb-2">
         <Text className="font-bold text-lg">Nombre</Text>
-        <View className="bg-zinc-100 p-3 rounded-lg">
+        <View className="bg-zinc-200 p-3 rounded-lg">
           <Text className="text-base">{userData.nombre}</Text>
         </View>
       </View>
@@ -17,7 +17,7 @@ const ProfileCard = ({ userData }) => {
       {/* Email */}
       <View className="mb-2">
         <Text className="font-bold text-lg">Correo</Text>
-        <View className="bg-zinc-100 p-3 rounded-lg">
+        <View className="bg-zinc-200 p-3 rounded-lg">
           <Text className="text-base">{userData.email}</Text>
         </View>
       </View>
@@ -25,7 +25,7 @@ const ProfileCard = ({ userData }) => {
       {/* Organizacion */}
       <View className="mb-2">
         <Text className="font-bold text-lg">Organización</Text>
-        <View className="bg-zinc-100 p-3 rounded-lg">
+        <View className="bg-zinc-200 p-3 rounded-lg">
           <Text className="text-base">
             {userData.org.nombre} - {userData.org.region}
           </Text>
@@ -35,7 +35,7 @@ const ProfileCard = ({ userData }) => {
       {/* Rol */}
       <View className="mb-2">
         <Text className="font-bold text-lg">Cargo</Text>
-        <View className="bg-zinc-100 p-3 rounded-lg">
+        <View className="bg-zinc-200 p-3 rounded-lg">
           <Text className="text-base">{userData.rol.rol_name}</Text>
         </View>
       </View>

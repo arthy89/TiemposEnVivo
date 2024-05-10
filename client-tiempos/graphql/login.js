@@ -11,6 +11,7 @@ export const LOGIN = gql`
           rol_name
         }
         org {
+          _id
           nombre
           region
         }

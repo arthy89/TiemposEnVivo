@@ -5,7 +5,7 @@ const HomeScreen = () => {
   return (
     <Layout>
       <Text className="font-bold text-3xl text-center mt-10 ">
-        HomeScreen xd
+        HomeScreen xd ga
       </Text>
     </Layout>
   );

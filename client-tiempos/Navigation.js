@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import getUser from "./assets/getUser";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 //! screens/pantallas
 import HomeScreen from "./screens/HomeScreen";
@@ -10,13 +13,20 @@ import HomeScreen from "./screens/HomeScreen";
 import UserScreen from "./screens/users/UserScreen";
 import Profile from "./screens/users/Profile";
 import AdminGeneralScreen from "./screens/admin/AdminGeneralScreen";
+import EventoForm from "./screens/admin/EventoForm";
+import EventoScreen from "./screens/admin/event/EventoScreen";
+import EtapasScreen from "./screens/admin/etapa/EtapasScreen";
+import EtapaScreen from "./screens/admin/etapa/EtapaScreen";
+import EtapaFormScreen from "./screens/admin/etapa/EtapaFormScreen";
+import EspecialFormScreen from "./screens/admin/especial/EspecialFormScreen";
 
 //? STACKS
 // Usauraio
 const UserStackNavigator = createNativeStackNavigator();
+
 function UserStack() {
   return (
-    <UserStackNavigator.Navigator initialRouteName="Login">
+    <UserStackNavigator.Navigator>
       {/* Login */}
       <UserStackNavigator.Screen
         name="Login"
@@ -26,7 +36,7 @@ function UserStack() {
         }}
       />
 
-      {/* Perfil */}
+      {/* Profile */}
       <UserStackNavigator.Screen
         name="Profile"
         component={Profile}
@@ -43,6 +53,59 @@ function UserStack() {
           headerShown: false,
         }}
       />
+
+      {/* Admin Evento Form */}
+      <UserStackNavigator.Screen
+        name="EventoForm"
+        component={EventoForm}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Evento */}
+      <UserStackNavigator.Screen
+        name="EventoScreen"
+        component={EventoScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Etapa */}
+      <UserStackNavigator.Screen
+        name="EtapasScreen"
+        component={EtapasScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <UserStackNavigator.Screen
+        name="EtapaScreen"
+        component={EtapaScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <UserStackNavigator.Screen
+        name="EtapaFormScreen"
+        component={EtapaFormScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Especial */}
+
+      <UserStackNavigator.Screen
+        name="EspecialFormScreen"
+        component={EspecialFormScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </UserStackNavigator.Navigator>
   );
 }
@@ -51,6 +114,15 @@ function UserStack() {
 //! BOTONES INFERIORES
 const Tab = createBottomTabNavigator();
 function MyTabs() {
+  const usuario = async () => {
+    const userAuth = await AsyncStorage.getItem("userAuth");
+    if (userAuth) {
+      console.log("gaaa");
+    } else {
+      console.log("xd");
+    }
+  };
+
   return (
     <Tab.Navigator>
       {/* Home */}
@@ -72,6 +144,11 @@ function MyTabs() {
       <Tab.Screen
         name="User"
         component={UserStack}
+        listeners={{
+          tabPress: () => {
+            usuario();
+          },
+        }}
         options={{
           tabBarLabel: "User",
           tabBarShowLabel: false,

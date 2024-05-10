@@ -51,7 +51,8 @@ const LoginForm = () => {
           <View>
             <Text className="mx-5 font-bold text-xl">Correo</Text>
             <TextInput
-              className="flex self-center bg-zinc-300 px-4 py-3 rounded-md w-11/12 mb-3"
+              className="flex self-center bg-zinc-200 px-4 py-4 rounded-md w-11/12 text-lg"
+              style={{ lineHeight: 20 }}
               placeholder="ejemplo@gmail.com"
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
@@ -60,7 +61,8 @@ const LoginForm = () => {
 
             <Text className="mx-5 font-bold text-xl">Contraseña</Text>
             <TextInput
-              className="flex self-center bg-zinc-300 px-4 py-3 rounded-md w-11/12 mb-3 "
+              className="flex self-center bg-zinc-200 px-4 py-4 rounded-md w-11/12 text-lg"
+              style={{ lineHeight: 20 }}
               placeholder="Ingrese su contraseña"
               onChangeText={handleChange("password")}
               onBlur={handleBlur("password")}
@@ -68,7 +70,7 @@ const LoginForm = () => {
             />
             <TouchableOpacity
               onPress={handleSubmit}
-              className="flex self-center bg-red-600 rounded-md py-2 w-10/12"
+              className="flex self-center bg-red-600 rounded-md py-2 w-10/12 mt-3"
             >
               <Text className="text-center font-bold text-lg text-white">
                 Ingresar
