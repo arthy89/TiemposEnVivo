@@ -24,10 +24,11 @@ const EspecialesList = () => {
 
   return (
     <View>
-      <Text className="font-bold text-xl mx-3">Especiales</Text>
       <FlatList
         className="px-3"
         data={data.etapa.especiales}
+        nestedScrollEnabled={true}
+        scrollEnabled={false}
         keyExtractor={(especial) => especial._id}
         renderItem={({ item }) => <EspecialCard especial={item} />}
       />

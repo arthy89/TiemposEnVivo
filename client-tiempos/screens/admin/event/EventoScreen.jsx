@@ -1,7 +1,7 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
-import { GET_EVENTO_M } from "../../../graphql/evento/evento";
+import { DEL_EVENTO, GET_EVENTO_M } from "../../../graphql/evento/evento";
 import Layout from "../../../components/Layout";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -15,6 +15,10 @@ const EventoScreen = () => {
     },
 
     skip: !route.params.eventoId,
+  });
+
+  const [delEvento] = useMutation(DEL_EVENTO, {
+    refetchQueries: ["getEventosSim"],
   });
 
   if (loading) return <Text className="text-white text-lg">Cargando</Text>;
@@ -73,7 +77,12 @@ const EventoScreen = () => {
       </TouchableOpacity>
 
       {/* TRIPULACIONES */}
-      <TouchableOpacity className="bg-zinc-200 rounded-md p-3 mx-3 shadow-sm shadow-zinc-300 mt-3 flex flex-row justify-between">
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("TripScreen", { eventoId: data.evento._id });
+        }}
+        className="bg-zinc-200 rounded-md p-3 mx-3 shadow-sm shadow-zinc-300 mt-3 flex flex-row justify-between"
+      >
         <View>
           <Text className="font-bold text-lg">
             Tripulaciones: {data.evento.tripulaciones.length}
@@ -102,7 +111,18 @@ const EventoScreen = () => {
       </TouchableOpacity>
 
       {/* ELIMINAR */}
-      <TouchableOpacity className="bg-red-500 rounded-lg p-3 mx-3">
+      <TouchableOpacity
+        className="bg-red-500 rounded-lg p-3 mx-3"
+        onPress={() => {
+          delEvento({
+            variables: {
+              id: data.evento._id,
+            },
+          });
+
+          navigation.navigate("AdminGeneral");
+        }}
+      >
         <Text className="font-bold text-center text-xl text-white">
           Eliminar Evento
         </Text>

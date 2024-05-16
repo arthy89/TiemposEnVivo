@@ -43,6 +43,8 @@ export const resolvers = {
     // TODO Tripulaciones
     tripulaciones: async () => await Tripulacion.find(),
     tripulacion: async (_, { _id }) => await Tripulacion.findById(_id),
+    tripulacionesEvent: async (_, { _id }) =>
+      await Tripulacion.find({ eventoId: _id }),
 
     // ! TIEMPOS
     tiempos: async () => await Tiempo.find(),

@@ -37,6 +37,7 @@ const CatForm = () => {
       <Text className="mx-5 font-bold text-xl">Nombre</Text>
       <TextInput
         className="flex self-center items-center text-lg bg-zinc-200 py-3 px-4 rounded-md w-11/12 mb-2"
+        style={{ lineHeight: 0 }}
         placeholder="Nueva categoría"
         placeholderTextColor="#a1a1aa"
         ref={(input) => {

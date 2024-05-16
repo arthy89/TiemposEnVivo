@@ -8,7 +8,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 //! screens/pantallas
+// Client
 import HomeScreen from "./screens/HomeScreen";
+import ScreenEvento from "./screens/client/ScreenEvento";
+import TiemposScreen from "./screens/client/TiemposScreen";
 // Usuario
 import UserScreen from "./screens/users/UserScreen";
 import Profile from "./screens/users/Profile";
@@ -20,10 +23,47 @@ import EtapaScreen from "./screens/admin/etapa/EtapaScreen";
 import EtapaFormScreen from "./screens/admin/etapa/EtapaFormScreen";
 import EspecialFormScreen from "./screens/admin/especial/EspecialFormScreen";
 import CatScreen from "./screens/admin/categorias/CatScreen";
+import TripScreen from "./screens/admin/tripulaciones/TripScreen";
+import TripFormScreen from "./screens/admin/tripulaciones/TripFormScreen";
+import CompFormScreen from "./screens/admin/competidor/CompFormScreen";
 
 //? STACKS
 // Usauraio
+const ClientStackNavigator = createNativeStackNavigator();
 const UserStackNavigator = createNativeStackNavigator();
+
+function ClientStack() {
+  return (
+    <ClientStackNavigator.Navigator>
+      {/* Home */}
+      <ClientStackNavigator.Screen
+        name="Screen"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Evento */}
+      <ClientStackNavigator.Screen
+        name="ScreenEvento"
+        component={ScreenEvento}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Tiempos */}
+      <ClientStackNavigator.Screen
+        name="TiemposScreen"
+        component={TiemposScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </ClientStackNavigator.Navigator>
+  );
+}
 
 function UserStack() {
   return (
@@ -115,6 +155,32 @@ function UserStack() {
           headerShown: false,
         }}
       />
+
+      {/* Tripulaciones */}
+      <UserStackNavigator.Screen
+        name="TripScreen"
+        component={TripScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <UserStackNavigator.Screen
+        name="TripFormScreen"
+        component={TripFormScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Competidores */}
+      <UserStackNavigator.Screen
+        name="CompFormScreen"
+        component={CompFormScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </UserStackNavigator.Navigator>
   );
 }
@@ -137,7 +203,7 @@ function MyTabs() {
       {/* Home */}
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={ClientStack}
         options={{
           tabBarLabel: "Home",
           tabBarShowLabel: false,

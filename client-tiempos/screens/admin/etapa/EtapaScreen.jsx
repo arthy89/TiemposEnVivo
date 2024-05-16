@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import Layout from "../../../components/Layout";
 import { DEL_ETAPA, GET_ETAPA } from "../../../graphql/evento/etapa";
 import EspecialesList from "../../../components/admin/especiales/EspecialesList";
@@ -60,29 +60,33 @@ const EtapaScreen = () => {
         </Text>
       </TouchableOpacity>
 
-      <EspecialesList />
+      <Text className="font-bold text-xl mx-3">Especiales</Text>
 
-      {/* Editar Etapa */}
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("EtapaFormScreen", { etapaId: data.etapa._id })
-        }
-        className="rounded-lg p-3 mx-3 mt-5 border border-slate-500"
-      >
-        <Text className="font-bold text-center text-xl text-slate-700">
-          Editar Etapa
-        </Text>
-      </TouchableOpacity>
+      <ScrollView>
+        <EspecialesList />
 
-      {/* Eliminar Etapa */}
-      <TouchableOpacity className="bg-red-500 rounded-lg p-3 mx-3 mt-2">
-        <Text
-          onPress={() => handleDelete()}
-          className="font-bold text-center text-xl text-white"
+        {/* Editar Etapa */}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("EtapaFormScreen", { etapaId: data.etapa._id })
+          }
+          className="rounded-lg p-3 mx-3 mt-5 border border-slate-500"
         >
-          Eliminar Etapa
-        </Text>
-      </TouchableOpacity>
+          <Text className="font-bold text-center text-xl text-slate-700">
+            Editar Etapa
+          </Text>
+        </TouchableOpacity>
+
+        {/* Eliminar Etapa */}
+        <TouchableOpacity className="bg-red-500 rounded-lg p-3 mx-3 mt-2">
+          <Text
+            onPress={() => handleDelete()}
+            className="font-bold text-center text-xl text-white"
+          >
+            Eliminar Etapa
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
     </Layout>
   );
 };

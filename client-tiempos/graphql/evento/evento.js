@@ -12,6 +12,26 @@ export const GET_EVENTOS_SIM = gql`
   }
 `;
 
+export const GET_EVENTOS_C = gql`
+  query getEventosC {
+    eventos {
+      _id
+      nombre
+      tipo
+      descripcion
+      org {
+        _id
+        nombre
+        region
+      }
+      lugar
+      fecha
+      hora
+      estado
+    }
+  }
+`;
+
 export const GET_EVENTO_M = gql`
   query getEventoM($id: ID!) {
     evento(_id: $id) {
@@ -59,6 +79,15 @@ export const CREAR_EVENTO = gql`
     ) {
       nombre
       descripcion
+    }
+  }
+`;
+
+export const DEL_EVENTO = gql`
+  mutation ($id: ID!) {
+    delEvento(_id: $id) {
+      _id
+      nombre
     }
   }
 `;

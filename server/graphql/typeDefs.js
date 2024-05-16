@@ -25,7 +25,8 @@ export const typeDefs = gql`
     competidor(_id: ID!): Competidor
 
     # Tripulaciones
-    tripulaciones: [Tripulacion]
+    tripulaciones: [Tripulacion] # All
+    tripulacionesEvent(_id: ID!): [Tripulacion] # Trips de Evento
     tripulacion(_id: ID!): Tripulacion
 
     # TIEMPOS #
