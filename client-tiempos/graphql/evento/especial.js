@@ -15,6 +15,49 @@ export const GET_ESPECIAL = gql`
   }
 `;
 
+export const GET_ESP_P = gql`
+  query getEspPro($id: ID!) {
+    especial(_id: $id) {
+      _id
+      nombre
+      distancia
+      lugar
+      etapa {
+        _id
+        nombre
+        evento {
+          _id
+          nombre
+        }
+      }
+      tiempos {
+        _id
+        horaSalida
+        horaLlegada
+        penalizacion
+        registrador
+        tripulacion {
+          _id
+          piloto {
+            _id
+            nombre
+            apellidos
+          }
+          navegante {
+            _id
+            nombre
+            apellidos
+          }
+          autoMarca
+          autoModelo
+          autoNum
+          categoria
+        }
+      }
+    }
+  }
+`;
+
 export const NEW_ESPECIAL = gql`
   mutation (
     $nombre: String!

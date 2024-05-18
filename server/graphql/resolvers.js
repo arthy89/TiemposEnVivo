@@ -1,3 +1,4 @@
+import { io } from "../app.js";
 import Rol from "../models/Rol.js";
 import Org from "../models/Org.js";
 import Usuario from "../models/Usuario.js";
@@ -325,6 +326,11 @@ export const resolvers = {
         registrador,
       });
       const savedTiempo = await tiempo.save();
+
+      // ? Emitir el evento de Nuevo Tiempo
+      io.emit("nuevoTiempo", savedTiempo);
+      // console.log("Emitiendo nuevoTiempo", savedTiempo);
+
       return savedTiempo;
     },
 
@@ -362,6 +368,7 @@ export const resolvers = {
 
   Especial: {
     etapa: async (parent) => await Etapa.findById(parent.etapaId),
+    tiempos: async (parent) => await Tiempo.find({ especialId: parent._id }),
   },
 
   Tripulacion: {

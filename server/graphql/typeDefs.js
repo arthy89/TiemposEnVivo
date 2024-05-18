@@ -231,6 +231,7 @@ export const typeDefs = gql`
     etapa: Etapa
     createdAt: String
     updatedAt: String
+    tiempos: [Tiempo]
   }
 
   type Competidor {
@@ -261,10 +262,10 @@ export const typeDefs = gql`
     _id: ID
     especial: Especial
     tripulacion: Tripulacion
-    horaSalida: Int
-    horaLlegada: Int
-    tiempoMarcado: Int
-    penalizacion: Int
+    horaSalida: String
+    horaLlegada: String
+    tiempoMarcado: String
+    penalizacion: String
     registrador: String
   }
 `;

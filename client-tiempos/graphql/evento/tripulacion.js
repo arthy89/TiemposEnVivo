@@ -32,6 +32,28 @@ export const GET_TRIPS_EVENTO = gql`
   }
 `;
 
+export const GET_TRIPULACION = gql`
+  query ($id: ID!) {
+    tripulacion(_id: $id) {
+      _id
+      piloto {
+        _id
+        nombre
+        apellidos
+      }
+      navegante {
+        _id
+        nombre
+        apellidos
+      }
+      autoMarca
+      autoModelo
+      autoNum
+      categoria
+    }
+  }
+`;
+
 export const NEW_TRIPULACION = gql`
   mutation (
     $piloto: ID!

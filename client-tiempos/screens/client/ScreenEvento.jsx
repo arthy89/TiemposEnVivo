@@ -46,8 +46,7 @@ const ScreenEvento = () => {
 
       <TouchableOpacity
         onPress={() => {
-          // !!!!!!!!sdfasdfasdfasdfas
-          navigation.navigate("TiemposScreen");
+          navigation.navigate("TiemposScreen", { eventoId: evento._id });
         }}
         className="flex self-center bg-red-600 rounded-md py-2 w-8/12 mt-3"
       >

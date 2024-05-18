@@ -26,6 +26,9 @@ import CatScreen from "./screens/admin/categorias/CatScreen";
 import TripScreen from "./screens/admin/tripulaciones/TripScreen";
 import TripFormScreen from "./screens/admin/tripulaciones/TripFormScreen";
 import CompFormScreen from "./screens/admin/competidor/CompFormScreen";
+import AdminTiempoScreen from "./screens/admin/tiempos/AdminTiempoScreen";
+import TiempoEspecialScreen from "./screens/admin/tiempos/TiempoEspecialScreen";
+import TiempoFormScreen from "./screens/admin/tiempos/TiempoFormScreen";
 
 //? STACKS
 // Usauraio
@@ -177,6 +180,31 @@ function UserStack() {
       <UserStackNavigator.Screen
         name="CompFormScreen"
         component={CompFormScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      {/* Tiempos */}
+      <UserStackNavigator.Screen
+        name="AdminTiempoScreen"
+        component={AdminTiempoScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <UserStackNavigator.Screen
+        name="TiempoEspecialScreen"
+        component={TiempoEspecialScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <UserStackNavigator.Screen
+        name="TiempoFormScreen"
+        component={TiempoFormScreen}
         options={{
           headerShown: false,
         }}

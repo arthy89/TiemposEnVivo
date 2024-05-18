@@ -32,6 +32,50 @@ export const GET_EVENTOS_C = gql`
   }
 `;
 
+export const GET_EVENTO_TIEMPOS = gql`
+  query ($id: ID!) {
+    evento(_id: $id) {
+      _id
+      nombre
+      categorias {
+        _id
+        nombre
+      }
+      etapas {
+        _id
+        nombre
+        especiales {
+          _id
+          nombre
+          tiempos {
+            _id
+            horaSalida
+            horaLlegada
+            penalizacion
+            tripulacion {
+              _id
+              piloto {
+                _id
+                nombre
+                apellidos
+              }
+              navegante {
+                _id
+                nombre
+                apellidos
+              }
+              autoMarca
+              autoModelo
+              autoNum
+              categoria
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GET_EVENTO_M = gql`
   query getEventoM($id: ID!) {
     evento(_id: $id) {

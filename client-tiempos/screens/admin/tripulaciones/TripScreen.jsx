@@ -8,7 +8,7 @@ import TripsList from "../../../components/admin/tripulaciones/TripsList";
 const TripScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  //console.log(route);
+  // console.log(route);
 
   const { data, loading, error } = useQuery(GET_TRIPS_EVENTO, {
     variables: {

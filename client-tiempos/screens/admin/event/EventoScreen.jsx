@@ -95,7 +95,12 @@ const EventoScreen = () => {
       </TouchableOpacity>
 
       {/* TIEMPOS */}
-      <TouchableOpacity className="bg-slate-200 rounded-md p-3 mx-3 shadow-sm shadow-zinc-300 mt-3 flex flex-row justify-between">
+      <TouchableOpacity
+        className="bg-slate-200 rounded-md p-3 mx-3 shadow-sm shadow-zinc-300 mt-3 flex flex-row justify-between"
+        onPress={() => {
+          navigation.navigate("AdminTiempoScreen", { evento: data.evento });
+        }}
+      >
         <View>
           <Text className="font-bold text-lg">Tiempos</Text>
         </View>

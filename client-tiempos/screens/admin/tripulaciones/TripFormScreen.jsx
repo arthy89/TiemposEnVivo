@@ -122,7 +122,7 @@ const TripFormScreen = () => {
   const handleSelectPiloto = (item) => {
     setSelectedValue(item);
     setShowPicker(false);
-    console.log("Piloto seleccionado:", item);
+    // console.log("Piloto seleccionado:", item);
 
     setTripulacion((prevState) => ({
       ...prevState,
@@ -133,7 +133,7 @@ const TripFormScreen = () => {
   const handleSelectNavegante = (item) => {
     setSelectedValueNavegante(item);
     setShowPickerNavegante(false);
-    console.log("Navegante seleccionado:", item);
+    // console.log("Navegante seleccionado:", item);
 
     setTripulacion((prevState) => ({
       ...prevState,
@@ -144,7 +144,7 @@ const TripFormScreen = () => {
   const handleSelectCat = (item) => {
     setSelectedValueCat(item);
     setShowPickerCat(false);
-    console.log("Categoría seleccionada:", item);
+    // console.log("Categoría seleccionada:", item);
 
     setTripulacion((prevState) => ({
       ...prevState,
