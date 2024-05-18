@@ -6,6 +6,7 @@ import http from "http";
 import { Server as SocketIOServer } from "socket.io";
 
 let io;
+const _port = process.env.PORT || 4000;
 
 export async function startApolloServer(typeDefs, resolvers) {
   const app = express();
@@ -40,14 +41,14 @@ export async function startApolloServer(typeDefs, resolvers) {
   await new Promise((resolve) =>
     httpServer.listen(
       {
-        port: 4000,
+        port: _port,
       },
       resolve
     )
   );
 
   console.log(
-    `🚀 Server ready on Port 4000 GraphQL at http://localhost:4000/graphql`
+    `🚀 Server ready on Port ${_port} GraphQL at http://localhost:${_port}/graphql`
   );
 }
 
